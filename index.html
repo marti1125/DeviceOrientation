@@ -3,7 +3,8 @@
 	<title></title>
 </head>
 <body>
-
+<a href="http://mediaupstream.com/sandbox/level/">test</a>
+<a href="http://www.html5rocks.com/en/tutorials/device/orientation/deviceorientationsample.html">test2</a>
 <div class="main">
   <h2>Device Orientation</h2>
   <table>
@@ -36,6 +37,7 @@
 
 <script type="text/javascript">
 if (window.DeviceOrientationEvent) {
+  alert("DeviceOrientation is supported");
   document.getElementById("doEvent").innerHTML = "DeviceOrientation";
   // Listen for the deviceorientation event and handle the raw data
   window.addEventListener('deviceorientation', function(eventData) {
@@ -53,8 +55,10 @@ if (window.DeviceOrientationEvent) {
 
     // call our orientation event handler
     deviceOrientationHandler(tiltLR, tiltFB, dir, motUD);
+    
   }, false);
 } else if (window.OrientationEvent) {
+  alert("MozOrientation is supported");
   document.getElementById("doEvent").innerHTML = "MozOrientation";
   window.addEventListener('MozOrientation', function(eventData) {
     // x is the left-to-right tilt from -1 to +1, so we need to convert to degrees
@@ -72,23 +76,26 @@ if (window.DeviceOrientationEvent) {
     var motUD = eventData.z;
     
     // call our orientation event handler
-    deviceOrientationHandler(tiltLR, tiltFB, dir, motUD);
+    deviceOrientationHandler(tiltLR, tiltFB, dir, motUD);    
+
   }, false);
 } else {
   document.getElementById("doEvent").innerHTML = "Not supported on your device or browser."
 }
 
-document.getElementById("doTiltLR").innerHTML = Math.round(tiltLR);
-document.getElementById("doTiltFB").innerHTML = Math.round(tiltFB);
-document.getElementById("doDirection").innerHTML = Math.round(dir);
-document.getElementById("doMotionUD").innerHTML = motionUD;
+function deviceOrientationHandler(tiltLR, tiltFB, dir, motionUD) {
+	document.getElementById("doTiltLR").innerHTML = Math.round(tiltLR);
+	document.getElementById("doTiltFB").innerHTML = Math.round(tiltFB);
+	document.getElementById("doDirection").innerHTML = Math.round(dir);
+	document.getElementById("doMotionUD").innerHTML = motionUD;
 
-// Apply the transform to the image
-document.getElementById("imgLogo").style.webkitTransform = "rotate(" + 
-  tiltLR + "deg) rotate3d(1,0,0, " + (tiltFB * -1) + "deg)";
-document.getElementById("imgLogo").style.MozTransform = "rotate(" + tiltLR + "deg)";
-document.getElementById("imgLogo").style.transform = "rotate(" + tiltLR + 
-  "deg) rotate3d(1,0,0, " + (tiltFB * -1) + "deg)";
+	// Apply the transform to the image
+	document.getElementById("imgLogo").style.webkitTransform = "rotate(" + 
+	  tiltLR + "deg) rotate3d(1,0,0, " + (tiltFB * -1) + "deg)";
+	document.getElementById("imgLogo").style.MozTransform = "rotate(" + tiltLR + "deg)";
+	document.getElementById("imgLogo").style.transform = "rotate(" + tiltLR + 
+	  "deg) rotate3d(1,0,0, " + (tiltFB * -1) + "deg)";	
+}
 
 </script>
 </body>
